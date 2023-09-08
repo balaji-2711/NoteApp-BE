@@ -28,40 +28,6 @@ require("dotenv").config();
 //   },
 // ];
 
-const mongoose = require("mongoose");
-
-const url = `mongodb+srv://balaji:balapass@cluster0.azqam1s.mongodb.net/NotesApp?retryWrites=true&w=majority`;
-
-mongoose.set("strictQuery", false);
-
-//connect to the database
-mongoose
-  .connect(url)
-  .then((result) => {
-    console.log("connected to mongodb database");
-  })
-  .catch((error) => {
-    console.log("eroor da");
-  });
-
-//create a schema
-const noteSchema = new mongoose.Schema({
-  content: String,
-  important: Boolean,
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-noteSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString();
-    delete returnedObject._id;
-    delete returnedObject.__v;
-  },
-});
-
 //create a model
 
 // const Note = mongoose.model("Note", noteSchema, "notes");
@@ -107,25 +73,26 @@ app.get("/api/notes/:id", (request, response) => {
 });
 
 // deleting a single resource
-app.delete("/api/notes/:id", (request, response) => {
-  const id = request.params.id;
+// app.delete("/api/notes/:id", (request, response) => {
+//   const id = request.params.id;
 
-  Note.findByIdAndDelete(id)
-    .then((deletedNote) => {
-      if (!deletedNote) {
-        return response
-          .status(404)
-          .json({ error: "deleted Note not found da" });
-      }
+//   Note.findByIdAndDelete(id)
+//     .then((deletedNote) => {
+//       if (!deletedNote) {
+//         return response
+//           .status(404)
+//           .json({ error: "deleted Note not found da" });
+//       }
 
-      response.status(204).json({ message: "delete aaidchi da" });
-    })
-    .catch((error) => {
-      response.status(500).json({ error: "Internal Server Error" });
-    });
+//       response.status(204).json({ message: "delete aaidchi da" });
+//     })
+//     .catch((error) => {
+//       response.status(500).json({ error: "Internal Server Error" });
+//     });
+// });
+
+// const PORT = 6000;
+const PORT = process.env.PORT || 7001;
+app.listen(PORT, () => {
+  console.log(`server running on portda ${PORT}`);
 });
-
-const PORT = process.env.PORT || 4008;
-app.listen(PORT);
-
-console.log(`server running on port ${PORT}`);

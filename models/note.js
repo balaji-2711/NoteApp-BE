@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-// const url = `mongodb+srv://balaji:balapass@cluster0.azqam1s.mongodb.net/NotesApp?retryWrites=true&w=majority`;
-const url = process.env.MONGODB_URI;
+const url = `mongodb+srv://balaji:balapass@cluster0.azqam1s.mongodb.net/NotesApp?retryWrites=true&w=majority`;
+// const url = process.env.MONGODB_URI;
 
 mongoose.set("strictQuery", false);
 
@@ -12,7 +12,7 @@ mongoose
     console.log("connected to mongodb database");
   })
   .catch((error) => {
-    console.log("eroor da");
+    console.log("errror da");
   });
 
 //create a schema
